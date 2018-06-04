@@ -1,0 +1,21 @@
+{
+    "name": "cjade/id-card",
+    "description": "Obtain user information through id card",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jade",
+            "email": "862226994@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload":{
+        "psr-4":{
+            "IdCard\\":"src"
+        }
+    }
+}
