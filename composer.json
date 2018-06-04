@@ -1,7 +1,7 @@
 {
     "name": "cjade/id-card",
     "description": "Obtain user information through id card",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
