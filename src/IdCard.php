@@ -88,7 +88,7 @@ class IdCard
      */
     public function setId ($id)
     {
-        if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
+//        if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
 
         $this->id       = strtoupper(trim($id));
         $this->idLength = strlen($this->id);
