@@ -189,11 +189,11 @@ class IdCard
     {
         $province = substr($this->id, 0, 2) . '0000';
         $city     = substr($this->id, 0, 4) . '00';
-        $district = substr($this->id, 0, 6);
+        $county = substr($this->id, 0, 6);
         return [
             'province' => self::$areas->$province,
             'city'     => self::$areas->$city,
-            'county'   => self::$areas->$district
+            'county'   => self::$areas->$county
         ];
     }
 }
