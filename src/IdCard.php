@@ -71,7 +71,7 @@ class IdCard
             self::$areas     = json_decode($areas);
         }
 
-        if (empty($id)) {
+        if (!empty($id)) {
             self::$_instance->setId($id);
         }
         return self::$_instance;
@@ -85,8 +85,8 @@ class IdCard
     {
         if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
 
-        $this->id       = strtoupper(trim($id));
-        $this->isValid  = false;
+        $this->id      = strtoupper(trim($id));
+        $this->isValid = false;
         return self::$_instance;
     }
 
@@ -189,11 +189,26 @@ class IdCard
     {
         $province = substr($this->id, 0, 2) . '0000';
         $city     = substr($this->id, 0, 4) . '00';
-        $county = substr($this->id, 0, 6);
+        $county   = substr($this->id, 0, 6);
         return [
             'province' => self::$areas->$province,
             'city'     => self::$areas->$city,
             'county'   => self::$areas->$county
         ];
+    }
+
+    /**
+     * 通过身份证号获取生日信息
+     * @param string $seperate 年月日之间的分隔符，默认-
+     * @return string | false
+     */
+    public function getBirthday ($seperate = '-')
+    {
+        $birthday_arr = array(
+            substr($this->id, 6, 4),
+            substr($this->id, 10, 2),
+            substr($this->id, 12, 2),
+        );
+        return implode($seperate, $birthday_arr);
     }
 }
