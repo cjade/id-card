@@ -26,11 +26,6 @@ class IdCard
      */
     private $id;
 
-    /**
-     * 身份证长度
-     * @var int
-     */
-    private $idLength;
 
     /**
      * 归属地
@@ -88,10 +83,9 @@ class IdCard
      */
     public function setId ($id)
     {
-//        if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
+        if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
 
         $this->id       = strtoupper(trim($id));
-        $this->idLength = strlen($this->id);
         $this->isValid  = false;
         return self::$_instance;
     }
@@ -186,23 +180,6 @@ class IdCard
         return $gender;
     }
 
-    /**
-     * 将 15 位身份证转化为 18 位身份证号码
-     * @return string
-     */
-    protected function id15To18 ()
-    {
-        if ($this->idLength == 15) {
-            // 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
-            if (array_search(substr($this->id, 12, 3), ['996', '997', '998', '999']) !== false) {
-                $this->id = substr($this->id, 0, 6) . '18' . substr($this->id, 6, 9);
-            } else {
-                $this->id = substr($this->id, 0, 6) . '19' . substr($this->id, 6, 9);
-            }
-            // 补全最后一位
-        }
-        return $this->id;
-    }
 
     /**
      * 根据身份证号获取地址
