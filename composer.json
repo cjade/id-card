@@ -1,6 +1,6 @@
 {
     "name": "cjade/id-card",
-    "description": "Obtain user information through id card",
+    "description": "Obtain user information through id card 身份证",
     "type": "library",
     "license": "MIT",
     "authors": [
