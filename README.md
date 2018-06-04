@@ -6,7 +6,7 @@
 composer require cjade/id-card 
 ```
 ### 环境要求
-- PHP >= 5.4.0
+- PHP >= 5.6.0
 ### 使用方法
 ```php
 use IdCard\IdCard;
