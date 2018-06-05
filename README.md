@@ -22,7 +22,17 @@ $identity->getBirthday('-');
 $identity->getBirthday('/');
 // 2018/06/01
 
+//验证身份证号码格式是否正确
+idCard = IdCard::create('******************');
+$result = $idCard->check()
+//true或false
+或者
+$idCard = IdCard::create('******************')->check();
+//true或false
 
+//获取身份证号
+$id = $idCard->getId();
 
+//
 
 ```

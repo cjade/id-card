@@ -12,8 +12,10 @@ class IdCard
 {
     //性别显示方式：中文
     const GENDER_CN = 'cn';
+
     //性别显示方式：英文首字母
     const GENDER_EN = 'en';
+
     /**
      * 单例实例
      * @var class object
@@ -26,24 +28,11 @@ class IdCard
      */
     private $id;
 
-
-    /**
-     * 归属地
-     * @var array
-     */
-    private $area;
-
     /**
      * 地区列表
      * @var array
      */
     private static $areas;
-
-    /**
-     * 身份证号是否合法
-     * @var bool
-     */
-    private $isValid = false;
 
     /**
      * 加权因子
@@ -83,11 +72,10 @@ class IdCard
      */
     public function setId ($id)
     {
-        if (!$this->check()) {
+        if (empty($id)) {
             throw new \InvalidArgumentException('Incorrect id card number.');
         }
-        $this->id      = strtoupper(trim($id));
-        $this->isValid = false;
+        $this->id = strtoupper(trim($id));
         return self::$_instance;
     }
 
@@ -117,7 +105,7 @@ class IdCard
     private function checkArea ()
     {
         $area_code = substr($this->id, 0, 6);
-        return isset(self::$areas[$area_code]);
+        return isset(self::$areas->$area_code);
     }
 
     /**
@@ -153,16 +141,6 @@ class IdCard
         return $verify_code == self::$code[$mod];
     }
 
-    /**
-     * 设置isValid属性，该方法始终返回true
-     * @param bool $isValid 是否合法
-     * @return true
-     */
-    private function setValid ($isValid = false)
-    {
-        $this->isValid = $isValid;
-        return true;
-    }
 
     /**
      * 根据身份证信息获取其性别
@@ -220,5 +198,26 @@ class IdCard
     public function check ()
     {
         return $this->checkArea() && $this->checkBirthday() && $this->checkCode();
+    }
+
+    /**
+     * 给用户身份证号加*，用于输出数据
+     * 规则：前4位 + N* + 后4位
+     * @param string $seperate 过滤显示符，默认*
+     * @return string | false
+     */
+    public function format ($seperate = '*', $left = 4, $right = 4)
+    {
+        if (!$this->id) {
+            return false;
+        }
+
+        $left  = intval($left) >= 0 ? intval($left) : 4;
+        $right = intval($right) >= 0 ? intval($right) : 4;
+        if ($left + $right > 18) {
+            return false;
+        }
+        $sublen = mb_strlen($this->id, 'UTF-8') - $left - $right;
+        return mb_substr($this->id, 0, $left, 'UTF-8') . str_repeat($seperate, $sublen) . mb_substr($this->id, $sublen + $left, null, 'UTF-8');
     }
 }
