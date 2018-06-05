@@ -83,8 +83,9 @@ class IdCard
      */
     public function setId ($id)
     {
-        if (empty($id)) throw new \InvalidArgumentException('Id Card must not be empty.');
-
+        if (!$this->check()) {
+            throw new \InvalidArgumentException('Incorrect id card number.');
+        }
         $this->id      = strtoupper(trim($id));
         $this->isValid = false;
         return self::$_instance;
@@ -210,5 +211,14 @@ class IdCard
             substr($this->id, 12, 2),
         );
         return implode($seperate, $birthday_arr);
+    }
+
+    /**
+     * 验证身份证号码是否正确
+     * @return bool
+     */
+    public function check ()
+    {
+        return $this->checkArea() && $this->checkBirthday() && $this->checkCode();
     }
 }
